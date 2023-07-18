@@ -22,58 +22,10 @@
    popa
 %endmacro
 
-%macro score1 0
+%macro score 1
     pusha
 
-    mov ax, 1
-
-    mov di, score_n
-    call tostring
-    mov si, score_n
-
-    popa
-%endmacro
-
-%macro score2 0
-    pusha
-
-    mov ax, 2
-
-    mov di, score_n
-    call tostring
-    mov si, score_n
-
-    popa
-%endmacro
-
-%macro score3 0
-    pusha
-
-    mov ax, 3
-
-    mov di, score_n
-    call tostring
-    mov si, score_n
-
-    popa
-%endmacro
-
-%macro score4 0
-    pusha
-
-    mov ax, 4
-
-    mov di, score_n
-    call tostring
-    mov si, score_n
-
-    popa
-%endmacro
-
-%macro score5 0
-    pusha
-
-    mov ax, 5
+    mov ax, %1
 
     mov di, score_n
     call tostring
@@ -87,7 +39,7 @@ end:
    jmp $
 menu:
    call limpaTela
- 
+   score 0
    mov ah, 0xb
    mov bh, 0
    mov bl, [preto]
@@ -111,7 +63,6 @@ reset:
    ;reseta as string do jogo para tracejado novamente
    xor cx, cx 
   
- 
    .loopreset1:
        cmp byte[di], 8
        je .donereset
@@ -173,6 +124,8 @@ winnerscreen:
    print backtomenu, [verde], 15, 3
    print exitgame, [vermelho], 16, 3
    print sobre, [cinza], 28, 0
+   print score, [branco], 19, 3
+   print score_n, [verde], 19, 9
 
 
 

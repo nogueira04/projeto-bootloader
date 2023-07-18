@@ -151,7 +151,7 @@ logo1:
         call delay
         xor cx, cx
         call limpaTela
-        score1
+        score 1
     
 
 logo2:
@@ -160,7 +160,7 @@ logo2:
         call delay
         xor cx, cx
         call limpaTela
-        score2 
+        score 2 
 
 logo3:
     game linkedin25, linkedintracejado, linkedinresposta, logo3,fase3
@@ -168,7 +168,7 @@ logo3:
         call delay
         xor cx, cx
         call limpaTela
-        score3
+        score 3
 
 logo4:
     game volks25, volkstracejado, volksresposta, logo4,fase4
@@ -176,7 +176,7 @@ logo4:
         call delay
         xor cx, cx
         call limpaTela
-        score4
+        score 4
 
 logo5:
     game giorgioarmani25, giorgioarmani, giorgioarmaniresposta,logo5 ,fase5
@@ -184,11 +184,12 @@ logo5:
         call delay
         xor cx, cx
         call limpaTela
-        score5
+        score 5
 
 logo6:
     game robocin50, robocintracejado, robocinresposta,logo6 ,fase6
     .continue:
+        score 6
         call delay
         call winnerscreen
 

@@ -49,7 +49,7 @@
   fase4 db "FASE 4:",8
   fase5 db "FASE 5:",8
   fase6 db "FASE BONUS:",8
-  score db "Score: ", 8
-  score_n db "0", 8
+  score db "Score:", 8
+  score_n db "00", 8
 
  

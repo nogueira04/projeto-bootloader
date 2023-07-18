@@ -21,6 +21,67 @@
  
    popa
 %endmacro
+
+%macro score1 0
+    pusha
+
+    mov ax, 1
+
+    mov di, score_n
+    call tostring
+    mov si, score_n
+
+    popa
+%endmacro
+
+%macro score2 0
+    pusha
+
+    mov ax, 2
+
+    mov di, score_n
+    call tostring
+    mov si, score_n
+
+    popa
+%endmacro
+
+%macro score3 0
+    pusha
+
+    mov ax, 3
+
+    mov di, score_n
+    call tostring
+    mov si, score_n
+
+    popa
+%endmacro
+
+%macro score4 0
+    pusha
+
+    mov ax, 4
+
+    mov di, score_n
+    call tostring
+    mov si, score_n
+
+    popa
+%endmacro
+
+%macro score5 0
+    pusha
+
+    mov ax, 5
+
+    mov di, score_n
+    call tostring
+    mov si, score_n
+
+    popa
+%endmacro
+
 end:
    call limpaTela
    jmp $
@@ -75,8 +136,8 @@ loserscreen:
    print backtomenu, [verde], 15, 3
    print exitgame, [vermelho], 16, 3
    print sobre, [cinza], 28, 0
-
-
+   print score, [branco], 19, 3
+   print score_n, [verde], 19, 9
 
 
    mov di,mctracejado

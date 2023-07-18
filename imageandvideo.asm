@@ -49,6 +49,27 @@ printimage:
 			pop dx
 			ret 
 
+%macro stoi 1:                ; mov si, string
+    
+
+    mov si, score_n
+    .loop1:
+      push %1
+      lodsb
+      mov cl, al
+      pop %1
+      cmp cl, 0        ; check EOF(NULL)
+      je .endloop1
+      sub cl, 48       ; '9'-'0' = 9
+      mov bx, 10
+      mul bx           ; 999*10 = 9990
+      add %1, cx       ; 9990+9 = 9999
+      jmp .loop1
+    .endloop1:
+      
+
+%endmacro
+
 printpixel:      	  		
         mov ah, 0ch
         mov bh, 0
@@ -69,6 +90,7 @@ set_mode:
   mov bh, 0   
   mov bl, 0xf 
   ret
+
 print_string:
    lodsb
    cmp al,8

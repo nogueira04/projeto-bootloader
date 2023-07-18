@@ -1,10 +1,7 @@
 org 0x7e00
 jmp 0x0000:start
-;%include "imageandvideo.asm"
-;%include "data.asm"
-%include "menu_winner_loser_functions.asm"
-data:
 
+%include "menu_winner_loser_functions.asm"
 
 %macro print_errors 1
     pusha
@@ -70,20 +67,6 @@ data:
 
 %endmacro
 
-%macro update_score 1
-    pusha
-
-    mov ah, %1
-    mov al, ah
-    xor ah, ah
-    mov di, score_n
-    call tostring
-    mov si, score_n
-    print score_n, [branco], 13, 15
-
-    popa
-%endmacro
-
 %macro charcmp 2
 ;1 ==  mov di,stringtracejada(mc) 
 ;2 == mov si,stringresposta(mcdonalds)
@@ -130,7 +113,6 @@ data:
             ;ret
 %endmacro
 
-
 %macro game 5
 ; %1 = logo
 ; %2 = tracejado
@@ -143,7 +125,7 @@ data:
     call set_mode
     mov si, %1
     call printimage
-    print %5,[branco],0,0
+    print %5, [branco], 0, 0
     xor cx, cx
 
     %%loop:
@@ -164,19 +146,21 @@ data:
 %endmacro
 
 logo1:
-    game mc25, mctracejado, mcresposta, logo1,fase1
+    game mc25, mctracejado, mcresposta, logo1, fase1
     .continue:
         call delay
         xor cx, cx
         call limpaTela
+        score1
     
 
 logo2:
-    game pepsi25, pepsitracejado, pepsiresposta, logo2,fase2
+    game pepsi25, pepsitracejado, pepsiresposta, logo2, fase2
     .continue:
         call delay
         xor cx, cx
         call limpaTela
+        score2 
 
 logo3:
     game linkedin25, linkedintracejado, linkedinresposta, logo3,fase3
@@ -184,24 +168,29 @@ logo3:
         call delay
         xor cx, cx
         call limpaTela
+        score3
 
 logo4:
     game volks25, volkstracejado, volksresposta, logo4,fase4
     .continue:
-    call delay
-    xor cx, cx
-    call limpaTela
+        call delay
+        xor cx, cx
+        call limpaTela
+        score4
+
 logo5:
     game giorgioarmani25, giorgioarmani, giorgioarmaniresposta,logo5 ,fase5
     .continue:
-    call delay
-    xor cx, cx
-    call limpaTela
+        call delay
+        xor cx, cx
+        call limpaTela
+        score5
+
 logo6:
     game robocin50, robocintracejado, robocinresposta,logo6 ,fase6
     .continue:
-    call delay
-    call winnerscreen
+        call delay
+        call winnerscreen
 
 start:
     xor ax, ax  

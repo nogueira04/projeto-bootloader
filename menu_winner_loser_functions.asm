@@ -1,27 +1,6 @@
 %include "data.asm"
 %include "imageandvideo.asm"
 
-%macro transition 0
-;macro pra fazer transicao de tela, pisca uma tela vermelha, depois reseta
-   pusha
- 
-   call limpaTela
- 
-   mov ah, 0xb
-   mov bh, 0  
-   mov bl, [cinza] 
-   int 10h 
- 
-   call delay
- 
-   mov ah, 0xb
-   mov bh, 0
-   mov bl, [preto]
-   int 10h
- 
-   popa
-%endmacro
-
 %macro score 1
     pusha
 

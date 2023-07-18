@@ -110,42 +110,6 @@ print_string:
        int 10h
     ret
 
-check_char:
- 	mov ah, 01h
-	int 16h
-	ret
-
-flush:                ; apaga o buffer do teclado
- 	mov ah, 05h
-	int 16h
-	ret
-
-
-clear:
-        mov ah, 0
-        mov al, 10h
-        int 10h
-        ret
-
-strcmp:                             ; compara duas lihas armazanadas em si e di
-	.loop1:
-		lodsb
-		cmp byte[di], 0
-		jne .continue
-		cmp al, 0
-		jne .done
-		stc
-		jmp .done
-		
-		.continue:
-			cmp al, byte[di]
-    			jne .done
-			clc
-    			inc di
-    			jmp .loop1
-
-		.done:
-			ret
 
 putchar:
   mov ah, 0x0e
@@ -155,23 +119,6 @@ putchar:
 getchar:
   mov ah, 0x00
   int 16h
-  ret
-
-endl:
-  mov al, 0x0a          ; line feed
-  call putchar
-  mov al, 0x0d          ; carriage return
-  call putchar
-  ret
-
-prints:             ; mov si, string
-  .loop:
-    lodsb           ; bota character em al 
-    cmp al, 0
-    je .endloop
-    call putchar
-    jmp .loop
-  .endloop:
   ret
 
 reverse:              ; mov si, string
@@ -215,20 +162,6 @@ tostring:              ; mov ax, int / mov di, string
   stosb
   call reverse
   ret
-
-printline:            
-
-	.loop1:
-		lodsb	
-		cmp al, 0
-		je .fim
-		call putchar
-		jmp .loop1
-	
-	.fim:
-		ret
-
-
 
 _fim:                          ; finaliza e retorna para o kernel
 	.wait:

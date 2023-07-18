@@ -1,27 +1,6 @@
 %include "data.asm"
 %include "imageandvideo.asm"
 
-%macro transition 0
-;macro pra fazer transicao de tela, pisca uma tela vermelha, depois reseta
-   pusha
- 
-   call limpaTela
- 
-   mov ah, 0xb
-   mov bh, 0  
-   mov bl, [cinza] 
-   int 10h 
- 
-   call delay
- 
-   mov ah, 0xb
-   mov bh, 0
-   mov bl, [preto]
-   int 10h
- 
-   popa
-%endmacro
-
 %macro score 1
     pusha
 
@@ -53,14 +32,13 @@ menu:
 
  
    call getchar
-   cmp al, 0x08 ;leitura de backspace. Al é registrador padrão de leitura
+   cmp al, 0x08 
    je end
-   cmp al, 0x20 ;leitura do valor do espaço
+   cmp al, 0x20 
    je logo1
    jmp menu
 
 reset:
-   ;reseta as string do jogo para tracejado novamente
    xor cx, cx 
   
    .loopreset1:
@@ -75,8 +53,6 @@ reset:
 loserscreen:
    call delay
    call limpaTela
-  
-  
  
    mov ah, 0xb
    mov bh, 0
@@ -104,17 +80,15 @@ loserscreen:
    mov di, giorgioarmani
    call reset
    call getchar
-   cmp al, 0x08 ;leitura de backspace. Al é registrador padrão de leitura
+   cmp al, 0x08
    je end
-   cmp al, 0x20 ;leitura do valor do espaço
+   cmp al, 0x20 
    je menu
    jmp loserscreen
 winnerscreen:
    call delay
    call limpaTela
   
-  
- 
    mov ah, 0xb
    mov bh, 0
    mov bl, [preto]
@@ -126,8 +100,6 @@ winnerscreen:
    print sobre, [cinza], 28, 0
    print score, [branco], 19, 3
    print score_n, [verde], 19, 9
-
-
 
 
    mov di,mctracejado
@@ -143,14 +115,14 @@ winnerscreen:
    mov di, giorgioarmani
    call reset
    call getchar
-   cmp al, 0x08 ;leitura de backspace. Al é registrador padrão de leitura
+   cmp al, 0x08
    je end
-   cmp al, 0x20 ;leitura do valor do espaço
+   cmp al, 0x20 
    je menu
    jmp winnerscreen
 
 delay:
-   mov bx, 2000 ;pegado o registrador inteiro
+   mov bx, 2000 
    mov cx, 2000
  
    .delayloop:
@@ -162,20 +134,17 @@ delay:
    ret
  
 limpaTela:
-   ;coloca o cursor na posicao (0,0)
    mov dx, 0
    mov bh, 0    
    mov ah, 0x2
    int 0x10
  
-   ;printa 2500 caracteres em branco para limpar os caracteres da tela
    mov cx, 2500
    mov bh, 0
    mov al, 0x20
    mov ah, 0x9
    int 0x10
  
-   ;retorna o cursor para a posicao (0,0)
    mov dx, 0
    mov bh, 0    
    mov ah, 0x2

@@ -1,5 +1,3 @@
-
-; FUNÇÕES DE VÍDEO E PRINTAR IMAGEM
 %macro print 4 
    pusha 
  
@@ -49,27 +47,6 @@ printimage:
 			pop dx
 			ret 
 
-%macro stoi 1:                ; mov si, string
-    
-
-    mov si, score_n
-    .loop1:
-      push %1
-      lodsb
-      mov cl, al
-      pop %1
-      cmp cl, 0        ; check EOF(NULL)
-      je .endloop1
-      sub cl, 48       ; '9'-'0' = 9
-      mov bx, 10
-      mul bx           ; 999*10 = 9990
-      add %1, cx       ; 9990+9 = 9999
-      jmp .loop1
-    .endloop1:
-      
-
-%endmacro
-
 printpixel:      	  		
         mov ah, 0ch
         mov bh, 0
@@ -110,42 +87,6 @@ print_string:
        int 10h
     ret
 
-check_char:
- 	mov ah, 01h
-	int 16h
-	ret
-
-flush:                ; apaga o buffer do teclado
- 	mov ah, 05h
-	int 16h
-	ret
-
-
-clear:
-        mov ah, 0
-        mov al, 10h
-        int 10h
-        ret
-
-strcmp:                             ; compara duas lihas armazanadas em si e di
-	.loop1:
-		lodsb
-		cmp byte[di], 0
-		jne .continue
-		cmp al, 0
-		jne .done
-		stc
-		jmp .done
-		
-		.continue:
-			cmp al, byte[di]
-    			jne .done
-			clc
-    			inc di
-    			jmp .loop1
-
-		.done:
-			ret
 
 putchar:
   mov ah, 0x0e
@@ -157,27 +98,11 @@ getchar:
   int 16h
   ret
 
-endl:
-  mov al, 0x0a          ; line feed
-  call putchar
-  mov al, 0x0d          ; carriage return
-  call putchar
-  ret
 
-prints:             ; mov si, string
-  .loop:
-    lodsb           ; bota character em al 
-    cmp al, 0
-    je .endloop
-    call putchar
-    jmp .loop
-  .endloop:
-  ret
-
-reverse:              ; mov si, string
+reverse:             
   mov di, si
-  xor cx, cx          ; zerar contador
-  .loop1:             ; botar string na stack
+  xor cx, cx          
+  .loop1:             
     lodsb
     cmp al, 0
     je .endloop1
@@ -185,22 +110,22 @@ reverse:              ; mov si, string
     push ax
     jmp .loop1
   .endloop1:
-  .loop2:             ; remover string da stack        
+  .loop2:              
     pop ax
     stosb
     loop .loop2
   ret
 
-tostring:              ; mov ax, int / mov di, string
+tostring:             
   push di
   .loop1:
     cmp ax, 0
     je .endloop1
     xor dx, dx
     mov bx, 10
-    div bx            ; ax = 9999 -> ax = 999, dx = 9
-    xchg ax, dx       ; swap ax, dx
-    add ax, 48        ; 9 + '0' = '9'
+    div bx            
+    xchg ax, dx      
+    add ax, 48       
     stosb
     xchg ax, dx
     jmp .loop1
@@ -216,21 +141,8 @@ tostring:              ; mov ax, int / mov di, string
   call reverse
   ret
 
-printline:            
 
-	.loop1:
-		lodsb	
-		cmp al, 0
-		je .fim
-		call putchar
-		jmp .loop1
-	
-	.fim:
-		ret
-
-
-
-_fim:                          ; finaliza e retorna para o kernel
+_fim:                        
 	.wait:
 		call .getchar
 		cmp al, 13
@@ -243,8 +155,5 @@ _fim:                          ; finaliza e retorna para o kernel
 		ret
 
 	.fim:	
-		;call _clear
-		;ret
-
 		pop ax
 		jmp start
